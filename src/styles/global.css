@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+/* ─── Custom Design Tokens ─────────────────────────────────── */
+@theme {
+  --color-forest:  #103D2E;
+  --color-dark-green: #092B22;
+  --color-cream:   #F7F3E9;
+  --color-golden:  #D9A441;
+  --color-beige:   #EAE2D2;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans:  'Inter', system-ui, sans-serif;
+}
+
+/* ─── Base Styles ─────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #F7F3E9;
+  color: #103D2E;
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ─── Typography ──────────────────────────────────────────── */
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* ─── Selection ───────────────────────────────────────────── */
+::selection {
+  background-color: #D9A441;
+  color: #092B22;
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F7F3E9;
+}
+::-webkit-scrollbar-thumb {
+  background: #103D2E;
+  border-radius: 3px;
+}
+
+/* ─── Utility Classes ─────────────────────────────────────── */
+.font-serif {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
