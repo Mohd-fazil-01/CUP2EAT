@@ -1,94 +1,96 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import Container from '../common/Container';
 import SectionHeading from '../common/SectionHeading';
 
+/**
+ * HowItWorks.jsx
+ * 01 POUR - 02 SIP - 03 EAT
+ * Authentic 3-step ritual shown on CUP2EAT promotional displays
+ */
+
 const steps = [
   {
-    number: '01',
-    label: 'POUR',
-    headline: 'Fill the Cup',
-    description:
-      'Fill your edible cup with your favourite hot or cold beverage. Tea, coffee, chai — the choice is yours.',
-    image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80',
-    imageAlt: 'Pouring a hot beverage — placeholder image',
+    step: '01',
+    action: 'POUR',
+    title: 'Pour Your Favourite Drink',
+    description: 'Fill the edible cup with piping hot kadak chai, rich espresso, cappuccino, or cold ice cream and shakes.',
+    visualEmoji: '🫖',
+    sub: 'Holds warm and cold drinks effortlessly',
   },
   {
-    number: '02',
-    label: 'SIP',
-    headline: 'Enjoy the Experience',
-    description:
-      'Savour your drink and appreciate the unique experience. The cup keeps your beverage at the perfect temperature.',
-    image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80',
-    imageAlt: 'Sipping a beverage — placeholder image',
+    step: '02',
+    action: 'SIP',
+    title: 'Enjoy The Pure Beverage',
+    description: 'Savour the aroma and warmth without any plastic taint or soggy paper aftertaste. Cup retains heat and crispness.',
+    visualEmoji: '☕',
+    sub: 'Crisp biscuit holds for 30+ minutes',
   },
   {
-    number: '03',
-    label: 'EAT',
-    headline: 'Finish & Enjoy',
-    description:
-      'Once your drink is done, the experience continues. Eat the cup and savour every last bite.',
-    image: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=600&q=80',
-    imageAlt: 'Eating the edible cup — placeholder image',
+    step: '03',
+    action: 'EAT',
+    title: 'Eat The Delicious Cup!',
+    description: 'Finish your drink and crunch directly into the baked vanilla, chocolate, or cardamom cup. Zero trash left behind!',
+    visualEmoji: '🍪',
+    sub: '100% Edible • FSSAI Certified',
   },
 ];
 
-/**
- * HowItWorks Section
- * Three-step visual walkthrough.
- */
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-24 lg:py-32 bg-[#103D2E]">
+    <section id="how-it-works" className="py-24 bg-[#FFF3D8] text-[#073D2D]">
       <Container>
-        <div className="flex flex-col items-center gap-16">
+        
+        {/* Header */}
+        <div className="flex flex-col items-center mb-16 text-center">
           <SectionHeading
-            label="How It Works"
-            heading="SIMPLE. DELICIOUS. REMARKABLE."
-            subheading="Three steps to a whole new beverage experience."
-            light
+            label="The 3-Step Ritual"
+            heading="EAT YOUR DRINK — HOW IT WORKS"
+            subheading="From the moment you pour your chai to the final crunchy bite, it transforms everyday tea-time into an unforgettable treat."
           />
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full relative">
-            {/* Connecting line (desktop only) */}
-            <div className="hidden md:block absolute top-[120px] left-[calc(16.66%+2rem)] right-[calc(16.66%+2rem)] h-px bg-[#D9A441]/20" />
-
-            {steps.map((step, i) => (
-              <motion.div
-                key={step.number}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: i * 0.15 }}
-                className="flex flex-col gap-5 items-center text-center group"
-              >
-                {/* Image */}
-                <div className="relative w-full max-w-[260px] aspect-square rounded-[2rem] overflow-hidden shadow-xl shadow-black/30">
-                  <img
-                    src={step.image}
-                    alt={step.imageAlt}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#092B22]/70 to-transparent" />
-                  {/* Number overlay */}
-                  <div className="absolute bottom-4 left-4 font-serif text-5xl font-black text-[#D9A441]/40 leading-none select-none">
-                    {step.number}
-                  </div>
-                </div>
-
-                {/* Step label */}
-                <div className="flex flex-col items-center gap-2">
-                  <span className="text-[10px] font-black tracking-[0.3em] text-[#D9A441] uppercase">
-                    {step.number} — {step.label}
-                  </span>
-                  <h3 className="font-serif text-xl font-bold text-[#F7F3E9]">{step.headline}</h3>
-                  <p className="text-sm text-[#EAE2D2]/60 leading-relaxed max-w-xs">
-                    {step.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </div>
+
+        {/* 3 Step Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {steps.map((s, idx) => (
+            <motion.div
+              key={s.step}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: idx * 0.15 }}
+              className="bg-white border-2 border-[#B98246]/20 rounded-3xl p-8 flex flex-col items-center text-center relative shadow-lg hover:border-[#F5C342] hover:shadow-2xl transition-all duration-300"
+            >
+              {/* Step Number Tag */}
+              <div className="w-14 h-14 rounded-full bg-[#073D2D] text-[#F5C342] font-black text-lg flex items-center justify-center mb-6 shadow-md border-2 border-[#F5C342]">
+                {s.step}
+              </div>
+
+              {/* Action Headline */}
+              <span className="text-xs font-black uppercase tracking-[0.25em] text-[#B98246] mb-1">
+                STEP {s.step}
+              </span>
+              <h3 className="font-serif text-3xl font-black text-[#073D2D] mb-3">
+                {s.action}
+              </h3>
+
+              {/* Visual Icon */}
+              <div className="text-4xl my-2">{s.visualEmoji}</div>
+
+              {/* Title & Desc */}
+              <h4 className="font-bold text-base text-[#073D2D] mb-2">{s.title}</h4>
+              <p className="text-sm text-[#073D2D]/70 leading-relaxed mb-4">{s.description}</p>
+
+              {/* Verification Subtext */}
+              <div className="mt-auto pt-4 border-t border-[#073D2D]/10 w-full">
+                <span className="text-[11px] font-semibold text-[#073D2D]/60 uppercase tracking-wider">
+                  {s.sub}
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
       </Container>
     </section>
   );

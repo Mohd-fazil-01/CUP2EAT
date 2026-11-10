@@ -1,98 +1,78 @@
+import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import Button from '../common/Button';
+import { Phone, MessageCircle, ArrowRight, Sparkles } from 'lucide-react';
+import Container from '../common/Container';
+import { brandConfig } from '../../data/brandConfig';
 
 /**
- * FinalCTA Section
- * Full-bleed closing call-to-action section.
+ * FinalCTA.jsx
+ * Bold, high-energy closing call to action featuring official wholesale packaging and direct WhatsApp order button.
  */
+
 export default function FinalCTA() {
-  const scrollTo = (id) => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+  const { wholesale } = brandConfig;
 
   return (
-    <section id="contact" className="relative py-28 lg:py-40 bg-[#103D2E] overflow-hidden">
-      {/* Background texture */}
-      <div className="absolute inset-0 opacity-10">
-        <img
-          src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1600&q=50"
-          alt=""
-          aria-hidden="true"
-          className="w-full h-full object-cover"
-        />
+    <section className="py-24 lg:py-32 bg-[#073D2D] text-[#FFF3D8] relative overflow-hidden">
+      
+      {/* Decorative Golden Rings */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full border-[30px] border-[#F5C342]/10" />
+        <div className="absolute -bottom-32 -right-32 w-[500px] h-[500px] rounded-full border-[50px] border-[#F5C342]/10" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[#F5C342]/5 blur-[120px]" />
       </div>
-      <div className="absolute inset-0 bg-[#103D2E]/85" />
 
-      {/* Decorative shapes */}
-      <motion.div
-        initial={{ rotate: -15, opacity: 0 }}
-        whileInView={{ rotate: 0, opacity: 0.07 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-        className="absolute -left-20 top-1/2 -translate-y-1/2 w-72 h-72 rounded-full border-[50px] border-[#D9A441]"
-      />
-      <motion.div
-        initial={{ rotate: 15, opacity: 0 }}
-        whileInView={{ rotate: 0, opacity: 0.07 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.2 }}
-        className="absolute -right-20 top-1/2 -translate-y-1/2 w-96 h-96 rounded-full border-[60px] border-[#D9A441]"
-      />
+      <Container className="relative z-10 text-center">
+        
+        {/* Micro Tagline */}
+        <div className="inline-flex items-center gap-2 bg-[#F5C342]/15 border border-[#F5C342]/30 text-[#F5C342] text-xs font-black tracking-[0.25em] uppercase px-5 py-2 rounded-full mb-8">
+          <Sparkles size={14} />
+          Small Sip, Big Change.
+        </div>
 
-      <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center gap-8">
-        <motion.span
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-xs font-black tracking-[0.3em] text-[#D9A441] uppercase"
-        >
-          Ready to try it?
-        </motion.span>
+        {/* Big Impact Headline */}
+        <h2 className="font-serif text-4xl sm:text-5xl lg:text-7xl font-black text-[#FFF3D8] leading-[1.08] mb-6 max-w-4xl mx-auto">
+          READY TO <span className="text-[#F5C342] italic">EAT YOUR</span> DRINK?
+        </h2>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#F7F3E9] leading-tight text-balance"
-        >
-          READY TO{' '}
-          <span className="text-[#D9A441] italic">EAT YOUR</span>{' '}
-          DRINK?
-        </motion.h2>
+        {/* Subtitle */}
+        <p className="text-base sm:text-xl text-[#FFF3D8]/75 max-w-2xl mx-auto leading-relaxed mb-10 font-light">
+          Order your trial batch or full wholesale pack of <strong>396 cups for ₹3,999/-</strong> with pan-India free delivery.
+        </p>
 
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-[#EAE2D2]/75 text-lg sm:text-xl max-w-xl leading-relaxed"
-        >
-          Experience something different with CUP2EAT.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-wrap gap-4 justify-center"
-        >
-          <Button
-            variant="golden"
-            onClick={() => scrollTo('#products')}
+        {/* CTA Button Group */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
+          
+          <a
+            href={wholesale.whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-[#25D366] text-white font-black text-sm px-8 py-4 rounded-full shadow-2xl hover:bg-[#1db853] transition-all duration-300 hover:scale-105"
           >
-            Explore Products
-            <ArrowRight size={16} />
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={() => scrollTo('#bulk-orders')}
+            <MessageCircle size={20} />
+            Order on WhatsApp
+          </a>
+
+          <a
+            href={`tel:${wholesale.phone}`}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-[#F5C342] text-[#092C20] font-black text-sm px-8 py-4 rounded-full shadow-2xl hover:bg-white transition-all duration-300 hover:scale-105"
           >
-            Contact Us
-          </Button>
-        </motion.div>
-      </div>
+            <Phone size={18} />
+            Call: {wholesale.phone}
+          </a>
+
+        </div>
+
+        {/* Reassurance footer */}
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-xs text-[#FFF3D8]/50 uppercase tracking-widest">
+          <span>✓ FSSAI Certified</span>
+          <span>•</span>
+          <span>✓ 100% Pure Veg</span>
+          <span>•</span>
+          <span>✓ Includes Delivery Pan-India</span>
+        </div>
+
+      </Container>
     </section>
   );
 }

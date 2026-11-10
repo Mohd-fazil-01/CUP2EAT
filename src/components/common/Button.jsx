@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 
 /**
- * Button
- * Premium CTA button with variants: primary | secondary | ghost | golden.
+ * Button — CUP2EAT Brand Edition
+ * Variants: primary | secondary | ghost | gold | gold-outline
  */
 export default function Button({
   children,
@@ -10,7 +10,6 @@ export default function Button({
   href,
   onClick,
   className = '',
-  as: Tag = 'button',
   ...props
 }) {
   const base =
@@ -18,25 +17,21 @@ export default function Button({
 
   const variants = {
     primary:
-      'bg-[#103D2E] text-[#F7F3E9] px-7 py-3.5 rounded-full hover:bg-[#D9A441] hover:text-[#092B22] shadow-lg hover:shadow-xl',
+      'bg-[#073D2D] text-[#FFF3D8] px-7 py-3.5 rounded-full hover:bg-[#F5C342] hover:text-[#092C20] shadow-lg hover:shadow-xl',
     secondary:
-      'border-2 border-[#103D2E] text-[#103D2E] px-7 py-3 rounded-full hover:bg-[#103D2E] hover:text-[#F7F3E9]',
+      'border-2 border-[#073D2D] text-[#073D2D] px-7 py-3 rounded-full hover:bg-[#073D2D] hover:text-[#FFF3D8]',
     ghost:
-      'border-2 border-[#F7F3E9]/50 text-[#F7F3E9] px-7 py-3 rounded-full hover:border-[#F7F3E9] hover:bg-[#F7F3E9]/10',
-    golden:
-      'bg-[#D9A441] text-[#092B22] px-7 py-3.5 rounded-full hover:bg-[#F7F3E9] hover:text-[#103D2E] shadow-lg hover:shadow-xl',
-    'golden-outline':
-      'border-2 border-[#D9A441] text-[#D9A441] px-7 py-3 rounded-full hover:bg-[#D9A441] hover:text-[#092B22]',
+      'border-2 border-[#FFF3D8]/50 text-[#FFF3D8] px-7 py-3 rounded-full hover:border-[#F5C342] hover:text-[#F5C342]',
+    gold:
+      'bg-[#F5C342] text-[#092C20] px-7 py-3.5 rounded-full hover:bg-[#FFF3D8] hover:text-[#073D2D] shadow-lg shadow-[#F5C342]/30 hover:shadow-xl font-bold',
+    'gold-outline':
+      'border-2 border-[#F5C342] text-[#F5C342] px-7 py-3 rounded-full hover:bg-[#F5C342] hover:text-[#092C20]',
   };
 
-  const Element = href ? 'a' : Tag;
+  const Element = href ? 'a' : 'button';
 
   return (
-    <motion.div
-      whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.97 }}
-      className="inline-block"
-    >
+    <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="inline-block">
       <Element
         href={href}
         onClick={onClick}

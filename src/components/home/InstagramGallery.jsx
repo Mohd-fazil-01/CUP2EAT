@@ -1,130 +1,101 @@
+import React from 'react';
 import { motion } from 'framer-motion';
+import { ExternalLink, Sparkles } from 'lucide-react';
 import Container from '../common/Container';
 import SectionHeading from '../common/SectionHeading';
 import { siteConfig } from '../../data/navigation';
 
-// Custom Instagram SVG (Lucide removed this icon in recent versions)
-function InstagramIcon({ size = 16, className = '' }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
+/**
+ * InstagramGallery.jsx
+ * Authentic gallery highlighting the CUP2EAT exhibition journey, standee, and Diwali promotions
+ */
 
-// Visual placeholder grid — themed beverage imagery from Unsplash.
-// Replace with official CUP2EAT Instagram content before launch.
-const galleryImages = [
+const galleryItems = [
   {
-    src: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500&q=80',
-    alt: 'Beverage in cup — placeholder for Instagram post',
+    image: '/images/wholesale_poster.png',
+    title: 'Official Wholesale Poster',
+    desc: '₹3,999/- for 396 Cups nationwide offer',
+    tag: 'B2B Offer'
   },
   {
-    src: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500&q=80',
-    alt: 'Coffee cup close-up — placeholder for Instagram post',
+    image: '/images/banner_standee.png',
+    title: 'Exhibition Standee Display',
+    desc: 'Small Sip, Big Change — Live stall & tastings',
+    tag: 'Events & Expo'
   },
   {
-    src: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=500&q=80',
-    alt: 'Hot beverage — placeholder for Instagram post',
+    image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600&q=80',
+    title: 'Chai Time Reinvented',
+    desc: 'Masala Chai in baked Cardamom and Vanilla cups',
+    tag: 'Tasting'
   },
   {
-    src: 'https://images.unsplash.com/photo-1521302080334-4bebac2763a6?w=500&q=80',
-    alt: 'Tea cup — placeholder for Instagram post',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1534687941688-651ccaafbff8?w=500&q=80',
-    alt: 'Coffee brewing — placeholder for Instagram post',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=500&q=80',
-    alt: 'Food and beverage — placeholder for Instagram post',
-  },
+    image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=600&q=80',
+    title: 'Café & Restaurant Serving',
+    desc: 'Zero waste serving for gourmet coffee & ice cream',
+    tag: 'Hospitality'
+  }
 ];
 
-/**
- * InstagramGallery Section
- * Visual placeholder gallery linking to @cup2eat Instagram.
- */
 export default function InstagramGallery() {
   return (
-    <section id="instagram" className="py-24 lg:py-32 bg-[#F7F3E9]">
+    <section id="instagram" className="py-24 bg-[#092C20] text-[#FFF3D8]">
       <Container>
-        <div className="flex flex-col items-center gap-12">
-          <div className="flex flex-col items-center gap-4">
-            <SectionHeading
-              label="Instagram"
-              heading="FOLLOW THE CUP2EAT JOURNEY."
-            />
-            <a
-              href={siteConfig.instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-[#103D2E] hover:text-[#D9A441] transition-colors font-semibold text-sm"
-            >
-              <InstagramIcon size={16} />
-              {siteConfig.instagramHandle}
-            </a>
-            <p className="text-xs text-[#103D2E]/40 italic">
-              * Visual gallery below uses placeholder imagery. Replace with real Instagram content before launch.
-            </p>
-          </div>
+        
+        {/* Header */}
+        <div className="flex flex-col items-center mb-16 text-center">
+          <SectionHeading
+            label="Join The Movement"
+            heading="FOLLOW THE CUP2EAT JOURNEY"
+            subheading="From bustling food festivals and catering exhibitions to daily cafe counters across the country."
+            light
+          />
 
-          {/* Gallery Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 w-full max-w-4xl mx-auto">
-            {galleryImages.map((img, i) => (
-              <motion.a
-                key={i}
-                href={siteConfig.instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="relative group overflow-hidden rounded-2xl aspect-square block"
-                aria-label={`View on Instagram: ${img.alt}`}
-              >
-                <img
-                  src={img.src}
-                  alt={img.alt}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-[#092B22]/0 group-hover:bg-[#092B22]/50 transition-all duration-400 flex items-center justify-center">
-                  <InstagramIcon
-                    size={28}
-                    className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg"
-                  />
-                </div>
-              </motion.a>
-            ))}
-          </div>
-
-          <motion.a
+          <a
             href={siteConfig.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-2 border-2 border-[#103D2E] text-[#103D2E] font-semibold text-sm px-7 py-3 rounded-full hover:bg-[#103D2E] hover:text-[#F7F3E9] transition-all duration-300"
+            className="inline-flex items-center gap-2 mt-4 bg-[#F5C342] text-[#092C20] font-black text-xs uppercase tracking-widest px-6 py-2.5 rounded-full hover:bg-white transition-colors shadow-lg shadow-[#F5C342]/20"
           >
-            <InstagramIcon size={16} />
-            Follow on Instagram
-          </motion.a>
+            <span>@cup2eat on Instagram</span>
+            <ExternalLink size={14} />
+          </a>
         </div>
+
+        {/* Gallery Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {galleryItems.map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="bg-[#073D2D] border border-[#F5C342]/20 rounded-3xl overflow-hidden group hover:border-[#F5C342] transition-all duration-300 flex flex-col"
+            >
+              <div className="relative aspect-square overflow-hidden bg-[#382316]/50">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute top-3 left-3 bg-[#092C20]/80 backdrop-blur-md text-[#F5C342] text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-[#F5C342]/30">
+                  {item.tag}
+                </div>
+              </div>
+
+              <div className="p-5 flex flex-col justify-between flex-grow">
+                <div>
+                  <h4 className="font-serif font-bold text-base text-[#FFF3D8] group-hover:text-[#F5C342] transition-colors mb-1">
+                    {item.title}
+                  </h4>
+                  <p className="text-xs text-[#FFF3D8]/65">{item.desc}</p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
       </Container>
     </section>
   );

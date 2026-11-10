@@ -1,21 +1,22 @@
 @import "tailwindcss";
 
-/* ─── Custom Design Tokens ─────────────────────────────────── */
+/* ─── CUP2EAT Brand Design Tokens ─────────────────────────────── */
 @theme {
-  --color-forest:  #103D2E;
-  --color-dark-green: #092B22;
-  --color-cream:   #F7F3E9;
-  --color-golden:  #D9A441;
-  --color-beige:   #EAE2D2;
+  --color-green:      #073D2D;
+  --color-dark-green: #092C20;
+  --color-gold:       #F5C342;
+  --color-gold-dark:  #D4A82A;
+  --color-cream:      #FFF3D8;
+  --color-kraft:      #B98246;
+  --color-brown:      #382316;
+  --color-white:      #FFFFFF;
 
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans:  'Inter', system-ui, sans-serif;
 }
 
-/* ─── Base Styles ─────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
+/* ─── Base ─────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
@@ -24,45 +25,59 @@ html {
 }
 
 body {
-  background-color: #F7F3E9;
-  color: #103D2E;
+  background-color: #FFF3D8;
+  color: #073D2D;
   font-family: 'Inter', system-ui, sans-serif;
   overflow-x: hidden;
 }
 
-/* ─── Typography ──────────────────────────────────────────── */
 h1, h2, h3, h4 {
   font-family: 'Playfair Display', Georgia, serif;
 }
 
-/* ─── Selection ───────────────────────────────────────────── */
 ::selection {
-  background-color: #D9A441;
-  color: #092B22;
+  background-color: #F5C342;
+  color: #092C20;
 }
 
-/* ─── Scrollbar ───────────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 6px;
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #092C20; }
+::-webkit-scrollbar-thumb { background: #F5C342; border-radius: 3px; }
+
+/* ─── Utilities ────────────────────────────────────────────────── */
+.font-serif { font-family: 'Playfair Display', Georgia, serif; }
+.text-balance { text-wrap: balance; }
+
+/* Steam animation */
+@keyframes steam-rise {
+  0%   { transform: translateY(0) scaleX(1); opacity: 0.6; }
+  50%  { transform: translateY(-18px) scaleX(1.4); opacity: 0.3; }
+  100% { transform: translateY(-36px) scaleX(0.8); opacity: 0; }
 }
-::-webkit-scrollbar-track {
-  background: #F7F3E9;
+.animate-steam {
+  animation: steam-rise 2.4s ease-in-out infinite;
 }
-::-webkit-scrollbar-thumb {
-  background: #103D2E;
-  border-radius: 3px;
+.animate-steam-delay-1 {
+  animation: steam-rise 2.4s ease-in-out 0.6s infinite;
+}
+.animate-steam-delay-2 {
+  animation: steam-rise 2.4s ease-in-out 1.2s infinite;
 }
 
-/* ─── Utility Classes ─────────────────────────────────────── */
-.font-serif {
-  font-family: 'Playfair Display', Georgia, serif;
+/* Wave float */
+@keyframes wave-float {
+  0%, 100% { d: path("M0,8 Q25,2 50,8 Q75,14 100,8 L100,20 L0,20 Z"); }
+  50%       { d: path("M0,8 Q25,14 50,8 Q75,2 100,8 L100,20 L0,20 Z"); }
 }
 
-.text-balance {
-  text-wrap: balance;
+/* Soft pulse */
+@keyframes soft-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%       { opacity: 0.8; transform: scale(1.04); }
 }
+.animate-soft-pulse { animation: soft-pulse 3s ease-in-out infinite; }
 
-/* Respect prefers-reduced-motion */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

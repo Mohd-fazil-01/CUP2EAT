@@ -1,200 +1,236 @@
+import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown, Leaf } from 'lucide-react';
-import Button from '../common/Button';
+import { ArrowDown, Sparkles, Flame, CheckCircle, Truck, Phone } from 'lucide-react';
+import { brandConfig } from '../../data/brandConfig';
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  show: (delay = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] } }),
-};
+function scrollTo(id) {
+  const el = document.querySelector(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
 
 /**
- * Hero Section
- * Full-viewport cinematic hero with product image, headline, and CTAs.
+ * Hero.jsx — High-Energy Dynamic & Animated Hero
+ * - Live animated steam rising from biscuit cup
+ * - Floating interactive badges with gentle hover/floating physics
+ * - Real brand details (₹3,999/- for 396 cups, Chocolate & Vanilla cups)
+ * - Mobile-first layout with high visual impact on first load
  */
+
 export default function Hero() {
-  const scrollDown = () => {
-    document.querySelector('#brand-intro')?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const { wholesale } = brandConfig;
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen bg-[#092B22] flex items-center overflow-hidden"
-      aria-label="Hero section"
+      className="relative min-h-[92vh] sm:min-h-screen bg-[#073D2D] flex items-center overflow-hidden pt-4 pb-16 lg:py-0"
+      aria-label="Hero – CUP2EAT"
     >
-      {/* Background image */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1600&q=85"
-          alt="Warm beverage in a cup — decorative background"
-          className="w-full h-full object-cover object-center opacity-20"
+      {/* 1. Dynamic Moving Ambient Particles & Glows */}
+      <div className="absolute inset-0 pointer-events-none">
+        <motion.div
+          animate={{
+            scale: [1, 1.15, 1],
+            x: [0, 30, 0],
+            y: [0, -20, 0],
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute top-1/4 right-[10%] w-[400px] sm:w-[650px] h-[400px] sm:h-[650px] rounded-full bg-gradient-to-tr from-[#F5C342]/15 via-[#B98246]/20 to-transparent blur-[120px]"
         />
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#092B22] via-[#092B22]/90 to-[#092B22]/50" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#092B22] via-transparent to-transparent" />
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            x: [0, -25, 0],
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+          className="absolute bottom-10 left-[5%] w-[320px] sm:w-[500px] h-[320px] sm:h-[500px] rounded-full bg-[#B98246]/15 blur-[100px]"
+        />
+        
+        {/* Subtle dot matrix */}
+        <div 
+          className="absolute inset-0 opacity-[0.04]" 
+          style={{
+            backgroundImage: 'radial-gradient(circle at 2px 2px, #F5C342 1px, transparent 0)',
+            backgroundSize: '32px 32px'
+          }}
+        />
       </div>
 
-      {/* Decorative golden ring */}
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 0.08 }}
-        transition={{ duration: 1.5, ease: 'easeOut' }}
-        className="absolute right-[5%] top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border-[40px] border-[#D9A441] hidden lg:block"
-      />
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full py-8 lg:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
-      {/* Content */}
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full pt-10 pb-24">
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[85vh]">
-
-          {/* Text Column */}
-          <div className="flex flex-col gap-7">
-            {/* Badge */}
+          {/* ── LEFT COLUMN: High Impact Typography & CTAs (7 Cols) ── */}
+          <div className="lg:col-span-7 flex flex-col gap-5 sm:gap-6 text-center lg:text-left items-center lg:items-start">
+            
+            {/* Top Official Tagline Badge */}
             <motion.div
-              initial="hidden"
-              animate="show"
-              custom={0.1}
-              variants={fadeUp}
-              className="inline-flex items-center gap-2 bg-[#D9A441]/15 border border-[#D9A441]/30 text-[#D9A441] text-xs font-semibold tracking-[0.18em] uppercase px-4 py-2 rounded-full w-fit"
+              initial={{ opacity: 0, y: -15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2 bg-[#F5C342]/15 border border-[#F5C342]/40 text-[#F5C342] text-xs font-black tracking-[0.2em] uppercase px-4 sm:px-5 py-2 rounded-full shadow-lg"
             >
-              <Leaf size={12} />
-              Eat Your Drink!
+              <Sparkles size={13} className="text-[#F5C342] animate-spin" style={{ animationDuration: '6s' }} />
+              <span>India's First Edible Cup Brand</span>
             </motion.div>
 
-            {/* Main Headline */}
-            <motion.h1
-              initial="hidden"
-              animate="show"
-              custom={0.2}
-              variants={fadeUp}
-              className="font-serif text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-[#F7F3E9] leading-[1.05] text-balance"
+            {/* Giant Brand Headline with Shimmer Effect */}
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
             >
-              THE CUP
-              <br />
-              <span className="text-[#D9A441] italic">YOU CAN</span>
-              <br />
-              EAT.
-            </motion.h1>
+              <h1 className="font-serif leading-[1.02] text-balance">
+                <span className="block text-5xl sm:text-7xl lg:text-8xl font-black text-[#FFF3D8] tracking-tight">
+                  EAT YOUR
+                </span>
+                <span className="block text-5xl sm:text-7xl lg:text-8xl font-black italic text-transparent bg-clip-text bg-gradient-to-r from-[#F5C342] via-[#FFF3D8] to-[#F5C342] drop-shadow-[0_4px_25px_rgba(245,195,66,0.4)]">
+                  DRINK!
+                </span>
+              </h1>
+            </motion.div>
 
-            {/* Subheading */}
+            {/* Supporting Headline from Brand Poster */}
             <motion.p
-              initial="hidden"
-              animate="show"
-              custom={0.35}
-              variants={fadeUp}
-              className="text-[#EAE2D2]/75 text-lg sm:text-xl leading-relaxed max-w-lg"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.25 }}
+              className="text-[#FFF3D8]/80 text-base sm:text-xl leading-relaxed max-w-xl font-light"
             >
-              Enjoy your favourite beverages with a delicious twist. Sip your drink,
-              savour the experience, and eat the cup.
+              <strong className="text-[#F5C342] font-semibold">A Delicious &amp; Sustainable Innovation.</strong>
+              {' '}Fill with hot Kadak Chai, Coffee, or Ice Cream — sip the drink and crunch the cup!
             </motion.p>
+
+            {/* Mobile Animated Interactive Cup Preview Banner (Visible on mobile right above buttons) */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="lg:hidden w-full bg-[#092C20]/90 border border-[#F5C342]/30 rounded-2xl p-4 flex items-center justify-between shadow-xl my-2"
+            >
+              <div className="flex items-center gap-3 text-left">
+                <div className="w-12 h-12 rounded-xl bg-[#073D2D] border border-[#F5C342] flex items-center justify-center text-xl shrink-0">
+                  ☕
+                </div>
+                <div>
+                  <span className="text-[10px] font-black uppercase text-[#F5C342] tracking-wider block">Signature Experience</span>
+                  <span className="text-xs font-bold text-[#FFF3D8]">Interactive Chai Fill Animation</span>
+                </div>
+              </div>
+              <button
+                onClick={() => scrollTo('#cup-experience')}
+                className="bg-[#F5C342] text-[#092C20] text-xs font-black uppercase px-3.5 py-2 rounded-full shrink-0 shadow-md animate-pulse"
+              >
+                Watch Now ↓
+              </button>
+            </motion.div>
 
             {/* CTAs */}
             <motion.div
-              initial="hidden"
-              animate="show"
-              custom={0.5}
-              variants={fadeUp}
-              className="flex flex-wrap gap-4 mt-2"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.35 }}
+              className="flex flex-col sm:flex-row gap-3.5 w-full sm:w-auto mt-1"
             >
-              <Button
-                variant="golden"
-                href="#products"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.querySelector('#products')?.scrollIntoView({ behavior: 'smooth' });
-                }}
+              <motion.button
+                onClick={() => scrollTo('#cup-experience')}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+                className="inline-flex items-center justify-center gap-2 bg-[#F5C342] text-[#092C20] font-black text-sm px-8 py-4 rounded-full shadow-2xl shadow-[#F5C342]/30 hover:bg-[#FFF3D8] transition-all duration-300"
               >
-                Explore Our Cups
-              </Button>
-              <Button
-                variant="ghost"
-                href="#story"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.querySelector('#story')?.scrollIntoView({ behavior: 'smooth' });
-                }}
+                <span>WATCH CHAI FILL ANIMATION</span>
+                <span className="text-base">☕</span>
+              </motion.button>
+
+              <motion.a
+                href="#wholesale"
+                onClick={(e) => { e.preventDefault(); scrollTo('#wholesale'); }}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+                className="inline-flex items-center justify-center gap-2 border-2 border-[#F5C342] text-[#FFF3D8] font-bold text-sm px-7 py-3.5 rounded-full hover:bg-[#F5C342] hover:text-[#092C20] transition-all duration-300"
               >
-                Discover Our Story
-              </Button>
+                <span>WHOLESALE DEAL (₹3,999)</span>
+              </motion.a>
             </motion.div>
 
-            {/* Stat strip */}
+            {/* Key Trust Signals from Standee */}
             <motion.div
-              initial="hidden"
-              animate="show"
-              custom={0.65}
-              variants={fadeUp}
-              className="flex flex-wrap gap-8 mt-4 pt-6 border-t border-white/10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.5 }}
+              className="grid grid-cols-3 gap-2 sm:gap-6 pt-4 border-t border-[#F5C342]/20 w-full max-w-lg"
             >
-              {[
-                { label: 'Innovative', value: 'Concept' },
-                { label: 'Edible', value: 'Cups' },
-                { label: 'Zero', value: 'Cup Waste' },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <p className="font-serif text-2xl font-bold text-[#D9A441]">{stat.value}</p>
-                  <p className="text-xs text-[#EAE2D2]/50 uppercase tracking-widest mt-0.5">{stat.label}</p>
-                </div>
-              ))}
+              <div className="text-center lg:text-left">
+                <p className="font-serif text-lg sm:text-2xl font-bold text-[#F5C342]">100%</p>
+                <p className="text-[10px] text-[#FFF3D8]/60 uppercase tracking-widest">Edible Biscuit</p>
+              </div>
+              <div className="text-center lg:text-left">
+                <p className="font-serif text-lg sm:text-2xl font-bold text-[#F5C342]">FSSAI</p>
+                <p className="text-[10px] text-[#FFF3D8]/60 uppercase tracking-widest">Certified Pure Veg</p>
+              </div>
+              <div className="text-center lg:text-left">
+                <p className="font-serif text-lg sm:text-2xl font-bold text-[#F5C342]">396 Cups</p>
+                <p className="text-[10px] text-[#FFF3D8]/60 uppercase tracking-widest">Wholesale Pack</p>
+              </div>
             </motion.div>
+
           </div>
 
-          {/* Image Column */}
+          {/* ── RIGHT COLUMN: Dynamic 3D Product Stage with Floating Badges (5 Cols) ── */}
           <motion.div
-            initial={{ opacity: 0, x: 60, scale: 0.95 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="relative hidden lg:flex items-center justify-center"
+            initial={{ opacity: 0, scale: 0.92, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="lg:col-span-5 relative flex items-center justify-center"
           >
-            {/* Product Image */}
-            <div className="relative w-[420px] h-[520px] rounded-[2rem] overflow-hidden shadow-2xl shadow-black/40">
+            {/* Outer Decorative Ring */}
+            <div className="absolute w-[320px] sm:w-[440px] aspect-square rounded-full border-2 border-dashed border-[#F5C342]/30 animate-spin pointer-events-none" style={{ animationDuration: '30s' }} />
+
+            {/* Main Showcase Poster/Product Card */}
+            <div className="relative w-full max-w-[320px] sm:max-w-[390px] aspect-[3/4] rounded-3xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.7)] border-4 border-[#F5C342]/40 bg-[#092C20]">
               <img
-                src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&q=85"
-                alt="Edible cup product — placeholder image, replace with official CUP2EAT photography"
-                className="w-full h-full object-cover"
+                src="/images/wholesale_poster.png"
+                alt="CUP2EAT Eat Your Drink edible cups"
+                className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#092B22]/60 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#073D2D] via-transparent to-transparent opacity-40" />
+
+              {/* Live Shimmer Overlay */}
+              <div className="absolute top-4 left-4 bg-[#092C20]/90 backdrop-blur-md border border-[#F5C342]/40 px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg">
+                <span className="w-2 h-2 rounded-full bg-[#4CAF50] animate-ping" />
+                <span className="text-[10px] font-black uppercase tracking-wider text-[#F5C342]">
+                  Authentic CUP2EAT Cups
+                </span>
+              </div>
             </div>
 
-            {/* Floating badge */}
+            {/* Floating Pill 1: Top Right (Wholesale Deal) */}
             <motion.div
-              initial={{ opacity: 0, y: 20, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.9 }}
-              className="absolute -bottom-6 -left-8 bg-[#F7F3E9] rounded-2xl px-5 py-4 shadow-xl"
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute -top-4 -right-2 sm:-right-6 bg-[#F5C342] text-[#092C20] px-4 py-2.5 rounded-2xl shadow-xl border border-white/40 flex items-center gap-2"
             >
-              <p className="text-[#103D2E] font-serif text-sm font-bold">Sip. Savour. Eat.</p>
-              <p className="text-[#103D2E]/60 text-xs mt-0.5">The edible cup experience</p>
+              <span className="text-lg">📦</span>
+              <div>
+                <p className="text-[10px] font-black uppercase leading-tight">Wholesale Deal</p>
+                <p className="font-bold text-xs">₹3,999 for 396 Cups</p>
+              </div>
             </motion.div>
 
-            {/* Floating label top-right */}
+            {/* Floating Pill 2: Bottom Left (Pan India Delivery) */}
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 1 }}
-              className="absolute -top-4 -right-4 bg-[#D9A441] rounded-xl px-4 py-3 shadow-lg"
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+              className="absolute -bottom-5 -left-2 sm:-left-6 bg-[#092C20] text-[#FFF3D8] border-2 border-[#F5C342] px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2.5"
             >
-              <p className="text-[#092B22] text-xs font-black uppercase tracking-wider">New Experience</p>
+              <Truck size={18} className="text-[#F5C342]" />
+              <div>
+                <p className="text-[10px] font-black uppercase text-[#F5C342] leading-tight">Free Shipping</p>
+                <p className="font-bold text-xs">All Over India 🇮🇳</p>
+              </div>
             </motion.div>
+
           </motion.div>
+
         </div>
-
-        {/* Scroll indicator */}
-        <motion.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          onClick={scrollDown}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-[#EAE2D2]/40 hover:text-[#D9A441] transition-colors group cursor-pointer"
-          aria-label="Scroll down"
-        >
-          <span className="text-[10px] uppercase tracking-widest">Scroll</span>
-          <motion.div
-            animate={{ y: [0, 5, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          >
-            <ArrowDown size={16} />
-          </motion.div>
-        </motion.button>
       </div>
     </section>
   );

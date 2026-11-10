@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 
 /**
- * SectionHeading
- * Reusable editorial heading with optional label and subtitle.
+ * SectionHeading — CUP2EAT Brand Edition
+ * Gold label, cream/green headline, with optional light/dark mode.
  */
 export default function SectionHeading({
   label,
@@ -13,8 +13,8 @@ export default function SectionHeading({
 }) {
   const alignClass = {
     center: 'text-center items-center',
-    left: 'text-left items-start',
-    right: 'text-right items-end',
+    left:   'text-left items-start',
+    right:  'text-right items-end',
   }[align];
 
   return (
@@ -25,20 +25,18 @@ export default function SectionHeading({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className={`inline-block text-xs font-semibold tracking-[0.2em] uppercase ${
-            light ? 'text-[#D9A441]' : 'text-[#D9A441]'
-          }`}
+          className="inline-block text-xs font-black tracking-[0.25em] uppercase text-[#F5C342]"
         >
-          {label}
+          — {label} —
         </motion.span>
       )}
       <motion.h2
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 22 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        className={`font-serif text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight ${
-          light ? 'text-[#F7F3E9]' : 'text-[#103D2E]'
+        transition={{ duration: 0.65, delay: 0.1 }}
+        className={`font-serif text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-balance ${
+          light ? 'text-[#FFF3D8]' : 'text-[#073D2D]'
         }`}
       >
         {heading}
@@ -50,7 +48,7 @@ export default function SectionHeading({
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className={`max-w-2xl text-base sm:text-lg leading-relaxed ${
-            light ? 'text-[#EAE2D2]/80' : 'text-[#103D2E]/70'
+            light ? 'text-[#FFF3D8]/70' : 'text-[#073D2D]/65'
           }`}
         >
           {subheading}

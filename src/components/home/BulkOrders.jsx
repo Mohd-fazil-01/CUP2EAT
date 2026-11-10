@@ -1,277 +1,218 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MessageCircle, Building2, Coffee, Hotel, Calendar, Truck, Users } from 'lucide-react';
+import { Phone, MessageCircle, Mail, MapPin, Send, CheckCircle2 } from 'lucide-react';
 import Container from '../common/Container';
 import SectionHeading from '../common/SectionHeading';
 import { siteConfig } from '../../data/navigation';
-
-const targets = [
-  { icon: Coffee, label: 'Cafes & Coffee Shops' },
-  { icon: Building2, label: 'Restaurants' },
-  { icon: Hotel, label: 'Hotels & Resorts' },
-  { icon: Calendar, label: 'Event Organizers' },
-  { icon: Truck, label: 'Distributors' },
-  { icon: Users, label: 'Corporate Events' },
-];
-
-const INITIAL_FORM = {
-  name: '',
-  businessName: '',
-  email: '',
-  phone: '',
-  quantity: '',
-  message: '',
-};
+import { brandConfig } from '../../data/brandConfig';
 
 /**
- * BulkOrders Section
- * B2B enquiry section with WhatsApp CTA and validated contact form.
+ * BulkOrders.jsx
+ * Contact & Business Enquiry section with direct link to official phone 9818192575 & WhatsApp
  */
+
 export default function BulkOrders() {
-  const [form, setForm] = useState(INITIAL_FORM);
-  const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState('idle'); // idle | success | error
-
-  const validate = () => {
-    const e = {};
-    if (!form.name.trim()) e.name = 'Your name is required.';
-    if (!form.email.trim()) {
-      e.email = 'Email address is required.';
-    } else if (!/\S+@\S+\.\S+/.test(form.email)) {
-      e.email = 'Please enter a valid email address.';
-    }
-    if (!form.phone.trim()) e.phone = 'Phone number is required.';
-    if (!form.quantity.trim()) e.quantity = 'Please enter an estimated quantity.';
-    return e;
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: '' }));
-  };
+  const [formData, setFormData] = useState({
+    name: '',
+    business: '',
+    phone: '',
+    email: '',
+    quantity: '396 Cups (1 Wholesale Box)',
+    message: ''
+  });
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const errs = validate();
-    if (Object.keys(errs).length) {
-      setErrors(errs);
-      return;
-    }
-    // Note: No backend is connected. This simulates form submission state only.
-    setStatus('success');
-    setForm(INITIAL_FORM);
-    setErrors({});
+    setSubmitted(true);
   };
 
-  const whatsappUrl = siteConfig.whatsappNumber
-    ? `https://wa.me/${siteConfig.whatsappNumber}?text=Hi%20CUP2EAT!%20I%27m%20interested%20in%20a%20bulk%20order.`
-    : '#';
-
-  const inputClass =
-    'w-full bg-[#F7F3E9] border border-[#EAE2D2] rounded-xl px-4 py-3 text-sm text-[#103D2E] placeholder:text-[#103D2E]/40 focus:outline-none focus:border-[#103D2E] focus:ring-2 focus:ring-[#103D2E]/10 transition-all';
-
   return (
-    <section id="bulk-orders" className="py-24 lg:py-32 bg-[#F7F3E9]">
+    <section id="contact" className="py-24 bg-[#FFF3D8] text-[#073D2D]">
       <Container>
-        <div className="grid lg:grid-cols-2 gap-16">
+        
+        {/* Header */}
+        <div className="flex flex-col items-center mb-16 text-center">
+          <SectionHeading
+            label="Get In Touch"
+            heading="READY TO SERVE CUP2EAT AT YOUR VENUE?"
+            subheading="Connect directly with our sales team for wholesale orders, cafe partnerships, event catering, or sample boxes."
+          />
+        </div>
 
-          {/* Left — Info */}
-          <div className="flex flex-col gap-8">
-            <SectionHeading
-              label="Bulk Orders & B2B"
-              heading="MAKE YOUR NEXT EVENT UNFORGETTABLE."
-              subheading="Bring a unique edible beverage experience to your customers with CUP2EAT."
-              align="left"
-            />
-
-            {/* Target grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {targets.map((t, i) => {
-                const Icon = t.icon;
-                return (
-                  <motion.div
-                    key={t.label}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: i * 0.07 }}
-                    className="flex items-center gap-2.5 bg-white rounded-2xl p-3.5 shadow-sm border border-[#EAE2D2]"
-                  >
-                    <div className="w-8 h-8 rounded-xl bg-[#103D2E] flex items-center justify-center shrink-0">
-                      <Icon size={14} className="text-[#D9A441]" />
-                    </div>
-                    <span className="text-xs font-medium text-[#103D2E]/80">{t.label}</span>
-                  </motion.div>
-                );
-              })}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          
+          {/* LEFT: Quick Contact Information & Direct Action Buttons (5 Cols) */}
+          <div className="lg:col-span-5 flex flex-col gap-8 bg-[#073D2D] text-[#FFF3D8] p-8 sm:p-10 rounded-3xl shadow-xl">
+            <div>
+              <span className="text-xs font-black tracking-widest text-[#F5C342] uppercase">
+                Direct Contact Line
+              </span>
+              <h3 className="font-serif text-3xl font-bold text-[#FFF3D8] mt-2 mb-4">
+                Let's Talk Edible Cups!
+              </h3>
+              <p className="text-sm text-[#FFF3D8]/75 leading-relaxed">
+                Whether you run a high-volume chai point, specialty cafe, luxury resort, or wedding catering business, we provide customized bulk quantities.
+              </p>
             </div>
 
-            {/* WhatsApp CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
+            {/* Official Details */}
+            <div className="flex flex-col gap-5 border-y border-[#F5C342]/20 py-6">
               <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 bg-[#25D366] text-white font-semibold px-6 py-3.5 rounded-full hover:bg-[#1db954] transition-colors shadow-lg shadow-[#25D366]/30 group"
+                href={`tel:${siteConfig.displayPhone}`}
+                className="flex items-center gap-4 hover:text-[#F5C342] transition-colors group"
               >
-                <MessageCircle size={18} className="group-hover:scale-110 transition-transform" />
-                Enquire via WhatsApp
-              </a>
-              {!siteConfig.whatsappNumber && (
-                <p className="text-xs text-[#103D2E]/40 mt-2 italic">
-                  WhatsApp number not yet configured — update in navigation.js
-                </p>
-              )}
-            </motion.div>
-          </div>
-
-          {/* Right — Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="bg-white rounded-3xl p-8 shadow-xl shadow-[#103D2E]/8 border border-[#EAE2D2]"
-          >
-            <h3 className="font-serif text-xl font-bold text-[#103D2E] mb-6">Send an Enquiry</h3>
-
-            {status === 'success' ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex flex-col items-center gap-4 py-10 text-center"
-              >
-                <div className="w-14 h-14 rounded-full bg-[#103D2E] flex items-center justify-center">
-                  <span className="text-[#D9A441] text-2xl">✓</span>
+                <div className="w-12 h-12 rounded-xl bg-[#F5C342] text-[#092C20] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                  <Phone size={20} />
                 </div>
                 <div>
-                  <h4 className="font-serif text-lg font-bold text-[#103D2E]">Enquiry Received!</h4>
-                  <p className="text-sm text-[#103D2E]/60 mt-1">
-                    Thank you for your interest. We will be in touch soon.
-                  </p>
-                  <p className="text-xs text-[#103D2E]/30 mt-3 italic">
-                    Note: This is a demo form — no data has been submitted to a server.
-                  </p>
+                  <span className="text-xs text-[#FFF3D8]/60 uppercase tracking-wider block">Official Call Line</span>
+                  <span className="font-mono text-lg font-bold text-[#FFF3D8] group-hover:text-[#F5C342]">{siteConfig.phone}</span>
                 </div>
+              </a>
+
+              <a
+                href={brandConfig.wholesale.whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 hover:text-[#25D366] transition-colors group"
+              >
+                <div className="w-12 h-12 rounded-xl bg-[#25D366] text-white flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                  <MessageCircle size={22} />
+                </div>
+                <div>
+                  <span className="text-xs text-[#FFF3D8]/60 uppercase tracking-wider block">Instant WhatsApp Chat</span>
+                  <span className="font-mono text-lg font-bold text-[#FFF3D8] group-hover:text-[#25D366]">Chat: 9818192575</span>
+                </div>
+              </a>
+
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#F5C342]/20 border border-[#F5C342]/40 text-[#F5C342] flex items-center justify-center shrink-0">
+                  <MapPin size={20} />
+                </div>
+                <div>
+                  <span className="text-xs text-[#FFF3D8]/60 uppercase tracking-wider block">Delivery Coverage</span>
+                  <span className="text-sm font-semibold text-[#FFF3D8]">Dispatch Across All States in India 🇮🇳</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Wholesale highlights */}
+            <div className="bg-[#092C20] p-4 rounded-2xl border border-[#F5C342]/25">
+              <span className="text-xs font-bold text-[#F5C342] uppercase tracking-wider block mb-1">
+                ⭐ Wholesale Deal Reminder:
+              </span>
+              <p className="text-xs text-[#FFF3D8]/80">
+                ₹3,999/- for 396 Cups includes free pan-India shipping &amp; FSSAI verified batch warranty.
+              </p>
+            </div>
+          </div>
+
+          {/* RIGHT: Enquiry Form (7 Cols) */}
+          <div className="lg:col-span-7 bg-white p-8 sm:p-10 rounded-3xl border-2 border-[#B98246]/20 shadow-xl">
+            {submitted ? (
+              <div className="py-12 flex flex-col items-center text-center">
+                <div className="w-16 h-16 rounded-full bg-[#4CAF50] text-white flex items-center justify-center mb-4 shadow-lg">
+                  <CheckCircle2 size={32} />
+                </div>
+                <h3 className="font-serif text-2xl font-bold text-[#073D2D] mb-2">Thank You for Your Enquiry!</h3>
+                <p className="text-sm text-[#073D2D]/70 max-w-md mb-6">
+                  Our wholesale representative will call or WhatsApp you within 24 hours at <strong>{formData.phone}</strong>.
+                </p>
                 <button
-                  onClick={() => setStatus('idle')}
-                  className="text-xs text-[#103D2E] underline underline-offset-2 mt-2 hover:text-[#D9A441] transition-colors"
+                  onClick={() => setSubmitted(false)}
+                  className="bg-[#073D2D] text-[#FFF3D8] font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-full hover:bg-[#F5C342] hover:text-[#092C20] transition-colors"
                 >
-                  Send another enquiry
+                  Submit Another Enquiry
                 </button>
-              </motion.div>
+              </div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <Field label="Your Name *" error={errors.name}>
+              <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <label className="block text-xs font-black uppercase tracking-wider text-[#073D2D] mb-2">
+                      Your Name *
+                    </label>
                     <input
                       type="text"
-                      name="name"
-                      id="b2b-name"
-                      placeholder="Jane Smith"
-                      value={form.name}
-                      onChange={handleChange}
-                      className={inputClass}
-                      aria-required="true"
+                      required
+                      placeholder="e.g. Rajesh Kumar"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full bg-[#FFF3D8]/40 border border-[#B98246]/40 rounded-xl px-4 py-3 text-sm text-[#073D2D] focus:outline-none focus:border-[#F5C342] focus:ring-2 focus:ring-[#F5C342]/30 transition-all"
                     />
-                  </Field>
-                  <Field label="Business Name" error={errors.businessName}>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-black uppercase tracking-wider text-[#073D2D] mb-2">
+                      Café / Business Name
+                    </label>
                     <input
                       type="text"
-                      name="businessName"
-                      id="b2b-business"
-                      placeholder="Your Café"
-                      value={form.businessName}
-                      onChange={handleChange}
-                      className={inputClass}
+                      placeholder="e.g. Chai &amp; Bites Café"
+                      value={formData.business}
+                      onChange={(e) => setFormData({ ...formData, business: e.target.value })}
+                      className="w-full bg-[#FFF3D8]/40 border border-[#B98246]/40 rounded-xl px-4 py-3 text-sm text-[#073D2D] focus:outline-none focus:border-[#F5C342] focus:ring-2 focus:ring-[#F5C342]/30 transition-all"
                     />
-                  </Field>
+                  </div>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <Field label="Email Address *" error={errors.email}>
-                    <input
-                      type="email"
-                      name="email"
-                      id="b2b-email"
-                      placeholder="hello@yourbusiness.com"
-                      value={form.email}
-                      onChange={handleChange}
-                      className={inputClass}
-                      aria-required="true"
-                    />
-                  </Field>
-                  <Field label="Phone Number *" error={errors.phone}>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <label className="block text-xs font-black uppercase tracking-wider text-[#073D2D] mb-2">
+                      Phone / WhatsApp *
+                    </label>
                     <input
                       type="tel"
-                      name="phone"
-                      id="b2b-phone"
+                      required
                       placeholder="+91 98765 43210"
-                      value={form.phone}
-                      onChange={handleChange}
-                      className={inputClass}
-                      aria-required="true"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full bg-[#FFF3D8]/40 border border-[#B98246]/40 rounded-xl px-4 py-3 text-sm text-[#073D2D] focus:outline-none focus:border-[#F5C342] focus:ring-2 focus:ring-[#F5C342]/30 transition-all"
                     />
-                  </Field>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-black uppercase tracking-wider text-[#073D2D] mb-2">
+                      Estimated Order Quantity
+                    </label>
+                    <select
+                      value={formData.quantity}
+                      onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
+                      className="w-full bg-[#FFF3D8]/40 border border-[#B98246]/40 rounded-xl px-4 py-3 text-sm text-[#073D2D] focus:outline-none focus:border-[#F5C342] focus:ring-2 focus:ring-[#F5C342]/30 transition-all"
+                    >
+                      <option>396 Cups (1 Wholesale Box - ₹3,999)</option>
+                      <option>792 Cups (2 Wholesale Boxes)</option>
+                      <option>1,500+ Cups (Event / Festival Batch)</option>
+                      <option>Sample Tasting Box</option>
+                    </select>
+                  </div>
                 </div>
-                <Field label="Estimated Quantity *" error={errors.quantity}>
-                  <input
-                    type="text"
-                    name="quantity"
-                    id="b2b-quantity"
-                    placeholder="e.g. 500 cups per month"
-                    value={form.quantity}
-                    onChange={handleChange}
-                    className={inputClass}
-                    aria-required="true"
-                  />
-                </Field>
-                <Field label="Message" error={errors.message}>
+
+                <div>
+                  <label className="block text-xs font-black uppercase tracking-wider text-[#073D2D] mb-2">
+                    Message / Preferred Flavours
+                  </label>
                   <textarea
-                    name="message"
-                    id="b2b-message"
                     rows={4}
-                    placeholder="Tell us about your event or business requirements..."
-                    value={form.message}
-                    onChange={handleChange}
-                    className={`${inputClass} resize-none`}
+                    placeholder="Tell us about your requirements (e.g. mix of Chocolate and Elaichi cups)..."
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className="w-full bg-[#FFF3D8]/40 border border-[#B98246]/40 rounded-xl px-4 py-3 text-sm text-[#073D2D] focus:outline-none focus:border-[#F5C342] focus:ring-2 focus:ring-[#F5C342]/30 transition-all"
                   />
-                </Field>
+                </div>
 
-                <p className="text-xs text-[#103D2E]/30 italic">
-                  * This form is a frontend demo. No data is sent to a server until a backend is connected.
-                </p>
-
-                <motion.button
+                <button
                   type="submit"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="bg-[#103D2E] text-[#F7F3E9] font-semibold py-3.5 rounded-full hover:bg-[#D9A441] hover:text-[#092B22] transition-all duration-300 shadow-lg"
+                  className="w-full bg-[#073D2D] text-[#FFF3D8] font-black text-sm uppercase tracking-widest py-4 rounded-full hover:bg-[#F5C342] hover:text-[#092C20] transition-all duration-300 shadow-xl shadow-[#073D2D]/20 mt-2"
                 >
-                  Submit Enquiry
-                </motion.button>
+                  Submit Wholesale Enquiry
+                </button>
               </form>
             )}
-          </motion.div>
+          </div>
+
         </div>
+
       </Container>
     </section>
-  );
-}
-
-function Field({ label, error, children }) {
-  return (
-    <div className="flex flex-col gap-1.5">
-      <label className="text-xs font-semibold text-[#103D2E]/70 uppercase tracking-wider">
-        {label}
-      </label>
-      {children}
-      {error && <p className="text-xs text-red-500">{error}</p>}
-    </div>
   );
 }

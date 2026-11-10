@@ -3,101 +3,89 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { navLinks, siteConfig } from '../../data/navigation';
 import { useScrollPosition } from '../../hooks/useScrollPosition';
-import Button from './Button';
+import Cup2EatLogo from './Cup2EatLogo';
 
-/**
- * Navbar
- * Transparent on hero, solid on scroll. Includes mobile hamburger menu.
- */
+function scrollTo(id) {
+  const el = document.querySelector(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+/** CUP2EAT Navbar — gold-on-dark, transparent → solid */
 export default function Navbar() {
   const scrollY = useScrollPosition();
   const [menuOpen, setMenuOpen] = useState(false);
   const isScrolled = scrollY > 60;
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
-  const handleNavClick = (href) => {
+  const handleNav = (href) => {
     setMenuOpen(false);
-    if (href.startsWith('#')) {
-      const el = document.querySelector(href);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (href === '/') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    if (href.startsWith('#')) { scrollTo(href); }
   };
 
   return (
     <>
       {/* Announcement Bar */}
-      <div className="bg-[#D9A441] text-[#092B22] text-center py-2 text-xs font-semibold tracking-widest uppercase z-50 relative">
-        Discover a better way to enjoy your favourite drinks.
+      <div className="bg-[#F5C342] text-[#092C20] text-center py-2 text-xs font-black tracking-[0.2em] uppercase z-50 relative">
+        🌿 Eat Your Drink! — India's First Edible Cup Brand
       </div>
 
-      {/* Main Navbar */}
+      {/* Navbar */}
       <motion.header
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
         className={`sticky top-0 z-40 w-full transition-all duration-500 ${
           isScrolled
-            ? 'bg-[#092B22]/95 backdrop-blur-md shadow-lg shadow-black/10'
-            : 'bg-transparent'
+            ? 'bg-[#092C20]/97 backdrop-blur-md shadow-xl shadow-black/20'
+            : 'bg-[#092C20]'
         }`}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
+
             {/* Logo */}
             <a
               href="/"
-              className="flex items-center gap-2 group"
+              onClick={(e) => { e.preventDefault(); handleNav('/'); }}
+              className="flex items-center group"
               aria-label="CUP2EAT – Home"
             >
-              <div className="flex items-center justify-center w-9 h-9 rounded-full bg-[#D9A441] group-hover:scale-105 transition-transform duration-300">
-                <span className="text-[#092B22] font-black text-xs tracking-tight leading-none">C2E</span>
-              </div>
-              <span className="font-serif text-xl font-bold text-[#F7F3E9] tracking-wide">
-                CUP2EAT
-              </span>
+              <Cup2EatLogo size={42} showText={true} />
             </a>
 
             {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-7" aria-label="Main navigation">
+            <nav className="hidden lg:flex items-center gap-6" aria-label="Main navigation">
               {navLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  onClick={(e) => {
-                    if (link.href.startsWith('#')) {
-                      e.preventDefault();
-                      handleNavClick(link.href);
-                    }
-                  }}
-                  className="text-sm font-medium text-[#F7F3E9]/80 hover:text-[#D9A441] transition-colors duration-200 relative group"
+                  onClick={(e) => { e.preventDefault(); handleNav(link.href); }}
+                  className="text-sm font-medium text-[#FFF3D8]/75 hover:text-[#F5C342] transition-colors duration-200 relative group"
                 >
                   {link.label}
-                  <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-[#D9A441] transition-all duration-300 group-hover:w-full" />
+                  <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-[#F5C342] transition-all duration-300 group-hover:w-full" />
                 </a>
               ))}
             </nav>
 
-            {/* CTA + Mobile Toggle */}
+            {/* CTA + Hamburger */}
             <div className="flex items-center gap-3">
-              <div className="hidden lg:block">
-                <Button
-                  variant="golden"
-                  href="#products"
-                  onClick={(e) => { e.preventDefault(); handleNavClick('#products'); }}
-                >
-                  Order Now
-                </Button>
-              </div>
+              <a
+                href="#wholesale"
+                onClick={(e) => { e.preventDefault(); scrollTo('#wholesale'); }}
+                className="hidden lg:inline-flex items-center gap-2 bg-[#F5C342] text-[#092C20] font-bold text-sm px-5 py-2.5 rounded-full hover:bg-[#FFF3D8] transition-all duration-300 shadow-md shadow-[#F5C342]/20"
+              >
+                Wholesale Enquiry
+              </a>
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="lg:hidden p-2 rounded-lg text-[#F7F3E9] hover:bg-white/10 transition-colors"
+                className="lg:hidden p-2 rounded-lg text-[#FFF3D8] hover:bg-white/10 transition-colors"
                 aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-                aria-expanded={menuOpen}
               >
                 {menuOpen ? <X size={22} /> : <Menu size={22} />}
               </button>
@@ -106,66 +94,52 @@ export default function Navbar() {
         </div>
       </motion.header>
 
-      {/* Mobile Menu */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {menuOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               key="backdrop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               onClick={() => setMenuOpen(false)}
-              className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-30 bg-black/70 backdrop-blur-sm lg:hidden"
             />
-            {/* Drawer */}
             <motion.div
               key="drawer"
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
+              initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              className="fixed top-0 right-0 z-40 h-full w-72 bg-[#092B22] shadow-2xl lg:hidden flex flex-col"
+              className="fixed top-0 right-0 z-40 h-full w-72 bg-[#092C20] shadow-2xl lg:hidden flex flex-col"
             >
-              <div className="flex items-center justify-between px-6 h-16 border-b border-white/10">
-                <span className="font-serif text-lg font-bold text-[#F7F3E9]">CUP2EAT</span>
-                <button
-                  onClick={() => setMenuOpen(false)}
-                  className="p-2 text-[#F7F3E9]/70 hover:text-[#F7F3E9]"
-                  aria-label="Close menu"
-                >
+              <div className="flex items-center justify-between px-6 h-16 border-b border-[#F5C342]/20">
+                <Cup2EatLogo size={34} showText={true} />
+                <button onClick={() => setMenuOpen(false)} className="text-[#FFF3D8]/60 hover:text-[#F5C342] p-1">
                   <X size={20} />
                 </button>
               </div>
-              <nav className="flex flex-col px-6 py-8 gap-1" aria-label="Mobile navigation">
+
+              <nav className="flex flex-col px-6 py-8 gap-1">
                 {navLinks.map((link, i) => (
                   <motion.a
                     key={link.label}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.06 }}
                     href={link.href}
-                    onClick={(e) => {
-                      if (link.href.startsWith('#')) e.preventDefault();
-                      handleNavClick(link.href);
-                    }}
-                    className="text-[#F7F3E9]/80 hover:text-[#D9A441] py-3 text-base font-medium border-b border-white/5 transition-colors"
+                    onClick={(e) => { e.preventDefault(); handleNav(link.href); }}
+                    className="text-[#FFF3D8]/75 hover:text-[#F5C342] py-3 text-base font-medium border-b border-[#F5C342]/10 transition-colors"
                   >
                     {link.label}
                   </motion.a>
                 ))}
               </nav>
+
               <div className="px-6 mt-auto pb-10">
-                <Button
-                  variant="golden"
-                  href="#products"
-                  onClick={(e) => { e.preventDefault(); handleNavClick('#products'); }}
-                  className="w-full justify-center"
+                <a
+                  href="#wholesale"
+                  onClick={(e) => { e.preventDefault(); handleNav('#wholesale'); }}
+                  className="block w-full text-center bg-[#F5C342] text-[#092C20] font-bold py-3.5 rounded-full hover:bg-[#FFF3D8] transition-colors shadow-lg"
                 >
-                  Order Now
-                </Button>
+                  Wholesale Enquiry
+                </a>
               </div>
             </motion.div>
           </>
